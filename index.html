@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Coding Questions And There Answers."/>
+    <title>Hitesh's Project</title>
+
+    <!--Importing Libs-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons|Lustria">
+    <link rel="stylesheet" href="https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/2.4.85/css/materialdesignicons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.js"></script>
+
+
+</head>
+<body>
+<div id="app">
+    <!--Main Container-->
+    <v-app light id="main-container">
+        <div>
+            <!--Starting Toolber/Main Heading-->
+            <v-toolbar color="teal" dark>
+                <v-toolbar-title>Question And Answer</v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-toolbar>
+            <!--Ending Toolber/Main Heading-->
+
+
+            <v-layout color="white" row wrap>
+
+                <!--Looping Through The questions And Displaying Each Question-->
+                <v-card v-for="(question, index) in questions" class="mb-4 question">
+                    <v-layout row wrap>
+                        <v-flex xs12 sm6>
+                            <v-card-title><h2 class="headline teal--text">{{
+                                question.question }}</h2></v-card-title>
+                            <v-card-text>
+                                <div class="description q1">
+                                    <blockquote class="fq">
+                                        <i class="mdi mdi-format-quote-open"></i> <q>{{ question.description }}</q>
+                                    </blockquote>
+                                </div>
+                                <!--<span class="subtitle"> {{ question.description }} </span>-->
+                            </v-card-text>
+                        </v-flex>
+
+                        <!--Code Examples Box-->
+                        <v-flex xs12 sm6>
+                            <v-card-text>
+                                <v-toolbar
+                                        color="orange darken-4"
+                                        dark
+                                        tabs
+                                >
+                                    <v-toolbar-title>Code Examples</v-toolbar-title>
+                                    <v-spacer></v-spacer>
+
+                                    <!-- Copy To Clipboard Button. Thank You Sir, For The Suggestion ;) -->
+                                    <v-tooltip top>
+                                        <v-btn icon @click="copyCode(question.answers[active[index]].answer)"
+                                               slot="activator">
+                                            <v-icon>mdi-content-copy</v-icon>
+                                        </v-btn>
+                                        <span>Click To Copy Code</span>
+                                    </v-tooltip>
+
+                                    <!--The Tabs Menu For Displaying Code for Specific Language-->
+                                    <v-tabs
+                                            v-model="active[index]"
+                                            color="orange darken-4"
+                                            slot="extension"
+                                            dark
+                                            slider-color="yellow">
+                                        <v-tab
+                                                v-for="n in question.answers.length"
+                                                :key="n"
+                                                ripple
+                                        >
+                                            <span class="tab-item">{{ question.answers[n-1].lang }}</span>
+                                        </v-tab>
+                                    </v-tabs>
+
+                                </v-toolbar>
+
+                                <!-- This Is where The Example Code Shows up. -->
+                                <v-tabs-items v-model="active[index]">
+                                    <v-tab-item
+                                            v-for="n in question.answers.length"
+                                            :key="n"
+                                    >
+                                        <v-card row wrap class="code">
+                                            <!--I Used Highlight.js To format the code-->
+                                            <pre>
+                                            <code :class="question.answers[n-1].lang">{{ question.answers[n-1].answer }}</code>
+                                        </pre>
+                                        </v-card>
+                                    </v-tab-item>
+                                </v-tabs-items>
+                            </v-card-text>
+                        </v-flex>
+                    </v-layout>
+                    <v-divider></v-divider>
+                </v-card>
+            </v-layout>
+        </div>
+
+        <!--The Alert Box-->
+        <v-snackbar :timeout="6000" bottom v-model="snackbar">
+            {{ snackbarMsg }}
+            <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
+
+        <!--Bottom Menu-->
+        <v-speed-dial v-model="fab" bottom right fixed open-on-hover transition="slide-x-transition">
+            <v-btn slot="activator" v-model="fab" color="blue darken-1" dark fab>
+                <v-icon>account_circle</v-icon>
+                <v-icon>close</v-icon>
+            </v-btn>
+
+            <v-tooltip left>
+                <v-btn fab slot="activator" dark small color="red darken-2" href="https://bubundas.com">
+                    <v-icon>mdi-home</v-icon>
+                </v-btn>
+                <span>Go Back To Home</span>
+            </v-tooltip>
+
+            <v-tooltip left>
+                <v-btn fab slot="activator" dark small color="teal darken-2" href="mailto:bubundas17@gmail.com">
+                    <v-icon>mdi-at</v-icon>
+                </v-btn>
+                <span>Email Me</span>
+            </v-tooltip>
+            <v-tooltip left>
+                <v-btn fab slot="activator" dark small color="black">
+                    <v-icon>mdi-github-circle</v-icon>
+                </v-btn>
+                <span>View On Github</span>
+            </v-tooltip>
+        </v-speed-dial>
+    </v-app>
+</div>
+</body>
+
+<!--This Is Where The Question And Answers Coming From -->
+<script src="./assets/js/questions.js"></script>
+<!--The Main Javascript File-->
+<script src="./assets/js/app.js"></script>
+</html>

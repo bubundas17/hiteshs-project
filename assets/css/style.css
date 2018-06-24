@@ -1,0 +1,63 @@
+#app {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    background: #12c2e9; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom right, #12c2e9, #c471ed, #f64f59); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #12c2e9, #c471ed, #f64f59);
+}
+h1 {
+    font-family: 'Lustria', serif;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 12px rgba(150, 150, 150, 1);
+}
+#headline{
+    width: 100%;
+    background: #9b59b6;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#main-container{
+    max-width: 1000px;
+    width: 100%;
+    margin: 50px 0;
+}
+
+@media (max-width: 1000px) {
+    #main-container{
+        margin: 0;
+    }
+}
+.question{
+    width: 100%;
+}
+code {
+    box-shadow: none!important;
+    width: 100%!important;
+}
+.code{
+    background: #F0F0F0;
+    overflow-y: scroll;
+    max-height: 300px;
+}
+pre{
+    background: #F0F0F0;
+    width: 100%;
+}
+
+.description{
+    padding: 1%;
+    margin: 0 auto;
+    font-size: 18px;
+    background: #fff;
+    max-width: 960px;
+    letter-spacing: 0.30px;
+    font-family: 'Roboto Slab';
+    box-shadow: 0 10px 10px rgba(0,0,0, .10);
+    color: rgba(27, 79, 114, 0.8);
+}
+blockquote q{quotes: ' ' ' ';}
+.q1{ border-left: 8px solid #2ecc71;}
