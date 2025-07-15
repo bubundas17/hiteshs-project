@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-content: center;
-
+    min-height: 100vh;
     background: #12c2e9; /* fallback for old browsers */
     background: -webkit-linear-gradient(to bottom right, #12c2e9, #c471ed, #f64f59); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to bottom right, #12c2e9, #c471ed, #f64f59);
@@ -20,44 +20,169 @@ h1 {
     border-radius: 5px;
 }
 
-#main-container{
-    max-width: 1000px;
+.v-application {
+    max-width: 1200px;
     width: 100%;
-    margin: 50px 0;
+    margin: 0 auto;
+    background: transparent !important;
 }
 
-@media (max-width: 1000px) {
-    #main-container{
+.v-main {
+    padding-top: 64px; /* Account for app bar height */
+}
+
+@media (max-width: 960px) {
+    .v-application {
         margin: 0;
+        max-width: 100%;
+    }
+    
+    .v-main {
+        padding-top: 56px; /* Smaller app bar on mobile */
     }
 }
 .question{
     width: 100%;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
 }
-code {
-    box-shadow: none!important;
-    width: 100%!important;
+.code {
+    background: #f8f9fa !important;
+    overflow-y: auto;
+    max-height: 400px;
+    border-radius: 0 0 4px 4px;
 }
-.code{
-    background: #F0F0F0;
-    overflow-y: scroll;
-    max-height: 300px;
-}
-pre{
-    background: #F0F0F0;
+.code pre {
+    background: #f8f9fa;
     width: 100%;
+    margin: 0;
+    padding: 1rem;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 0;
 }
-
+.code code {
+    box-shadow: none !important;
+    width: 100% !important;
+    background: transparent !important;
+    font-family: 'Fira Code', 'Monaco', 'Consolas', 'Ubuntu Mono', monospace;
+}
 .description{
-    padding: 1%;
+    padding: 1rem;
     margin: 0 auto;
-    font-size: 18px;
+    font-size: 16px;
     background: #fff;
-    max-width: 960px;
-    letter-spacing: 0.30px;
-    font-family: 'Roboto Slab';
-    box-shadow: 0 10px 10px rgba(0,0,0, .10);
+    max-width: 100%;
+    letter-spacing: 0.3px;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     color: rgba(27, 79, 114, 0.8);
+    border-radius: 4px;
+    line-height: 1.6;
 }
-blockquote q{quotes: ' ' ' ';}
-.q1{ border-left: 8px solid #2ecc71;}
+.description blockquote {
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 4px solid #2ecc71;
+    font-style: italic;
+}
+.description blockquote q {
+    quotes: '"' '"';
+}
+.description blockquote q:before {
+    content: open-quote;
+}
+.description blockquote q:after {
+    content: close-quote;
+}
+.fq {
+    margin: 0;
+    padding: 0;
+}
+/* Vuetify 3 specific overrides */
+.v-toolbar__content {
+    padding: 0 16px;
+}
+.v-tabs {
+    background: transparent;
+}
+.v-tab {
+    text-transform: none;
+    font-weight: 500;
+}
+.tab-item {
+    font-size: 14px;
+    font-weight: 500;
+}
+/* Speed dial positioning fix */
+.v-speed-dial {
+    position: fixed;
+}
+/* Responsive improvements */
+@media (max-width: 600px) {
+    .description {
+        font-size: 14px;
+        padding: 0.75rem;
+    }
+    
+    .code {
+        max-height: 300px;
+    }
+    
+    .code pre {
+        padding: 0.75rem;
+        font-size: 13px;
+    }
+}
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .description {
+        background: #1e1e1e;
+        color: rgba(255, 255, 255, 0.87);
+    }
+    
+    .code {
+        background: #0d1117 !important;
+    }
+    
+    .code pre {
+        background: #0d1117;
+        color: #c9d1d9;
+    }
+}
+/* Smooth transitions */
+.question {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.question:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+/* Loading states */
+.v-window-item {
+    transition: opacity 0.3s ease;
+}
+/* Accessibility improvements */
+.v-btn:focus {
+    outline: 2px solid #2196f3;
+    outline-offset: 2px;
+}
+/* Print styles */
+@media print {
+    #app {
+        background: white !important;
+    }
+    
+    .v-app-bar,
+    .v-speed-dial,
+    .v-snackbar {
+        display: none !important;
+    }
+    
+    .question {
+        break-inside: avoid;
+        margin-bottom: 2rem;
+    }
+}
